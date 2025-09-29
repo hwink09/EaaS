@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { StatusCodes } from 'http-status-codes'
 import { MOCK_USER } from '~/models/mockDatabase'
-import { ResendProvider } from '~/providers/ResendProvider'
+// import { ResendProvider } from '~/providers/ResendProvider'
+import { MailerSendProvider } from '~/providers/MailerSendProvider'
 
 const register = async (req, res) => {
   try {
@@ -9,6 +10,7 @@ const register = async (req, res) => {
     // Gửi mail cho user sau khi đăng ký tài khoản, có thể là mail xác nhận, mail welcome...vv
     // Bước gửi mail này sẽ là việc gửi hành động đến một dịch vụ Email as a Service.
     const to = createdUser.EMAIL
+    const toName = createdUser.USERNAME
     const subject = 'Created account successfully - Hwinkdev'
     const html = `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
@@ -37,13 +39,21 @@ const register = async (req, res) => {
 `
 
     //Gửi mail với Resend
-    const sentEmailResponse = await ResendProvider.sendEmail({
+    // const resendEmailResponse = await ResendProvider.sendEmail({
+    //   to,
+    //   subject,
+    //   html
+    // })
+    // console.log('🚀 ~ register ~ resendEmailResponse:', resendEmailResponse)
+
+    // Gửi mail với MailerSend
+    const mailerSendEmailResponse = await MailerSendProvider.sendEmail({
       to,
+      toName,
       subject,
       html
     })
-    console.log('🚀 ~ register ~ sentEmailResponse:', sentEmailResponse)
-
+    console.log('🚀 ~ register ~ mailerSendEmailResponse:', mailerSendEmailResponse)
     // Trả về response với thông tin user đã được tạo
     res.status(StatusCodes.OK).json(createdUser)
   } catch (error) {
