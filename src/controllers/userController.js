@@ -39,21 +39,13 @@ const register = async (req, res) => {
 `
 
     //Gửi mail với Resend
-    // const resendEmailResponse = await ResendProvider.sendEmail({
-    //   to,
-    //   subject,
-    //   html
-    // })
+    // const resendEmailResponse = await ResendProvider.sendEmail({ to, subject, html })
     // console.log('🚀 ~ register ~ resendEmailResponse:', resendEmailResponse)
 
     // Gửi mail với MailerSend
-    const mailerSendEmailResponse = await MailerSendProvider.sendEmail({
-      to,
-      toName,
-      subject,
-      html
-    })
+    const mailerSendEmailResponse = await MailerSendProvider.sendEmail({ to, toName, subject, html })
     console.log('🚀 ~ register ~ mailerSendEmailResponse:', mailerSendEmailResponse)
+
     // Trả về response với thông tin user đã được tạo
     res.status(StatusCodes.OK).json(createdUser)
   } catch (error) {

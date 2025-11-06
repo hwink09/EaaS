@@ -18,14 +18,35 @@ const sendEmail = async ({ to, toName, subject, html }) => {
   try {
     // Setup mail và tên của người nhận, (hoặc nhiều người nhận, dữ liệu trong mảng)
     const recipient = [new Recipient(to, toName)]
+
+    // CC (Carbon Copy) - Gửi bản sao công khai, nghĩa là gửi bản sao cho người khác để họ biết nội dung email, nhưng không cần phản hồi.
+    // Người nhân chính và người được CC đều có thể thấy địa chỉ email của nhau.
+    // eslint-disable-next-line no-unused-vars
+    const cc = [
+      new Recipient('your_cc_01@hwink.dev', 'Your Client CC 01'),
+      new Recipient('your_cc_02@hwink.dev', 'Your Client CC 02'),
+      new Recipient('your_cc_03@hwink.dev', 'Your Client CC 03'),
+    ]
+
+    // BCC (Blind Carbon Copy) - Gửi bản sao ẩn, nghĩa là người nhận chính không biết ai đang nhận được bcc.
+    // BCC hữu ích khi gửi email hàng loạt (VD: thông báo đến nhiều khách hàng mà không muốn họ biết nhau).
+    // eslint-disable-next-line no-unused-vars
+    const bcc = [
+      new Recipient('your_bcc_01@hwink.dev', 'Your Client BCC 01'),
+      new Recipient('your_bcc_02@hwink.dev', 'Your Client BCC 02'),
+      new Recipient('your_bcc_03@hwink.dev', 'Your Client BCC 03'),
+    ]
+
     // Setup email params theo chuẩn của MailerSend
     const emailParams = new EmailParams()
       .setFrom(sendFrom)
       .setTo(recipient)
       .setReplyTo(sendFrom)
+      //.setCc(cc)
+      //.setBcc(bcc)
       .setSubject(subject)
       .setHtml(html)
-      // .setText()
+    // .setText()
 
     // Thực hiện gửi email
     const data = await mailerSendInstance.email.send(emailParams)
