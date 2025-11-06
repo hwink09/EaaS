@@ -25,7 +25,7 @@ const sendEmail = async ({ to, toName, subject, html }) => {
     const cc = [
       new Recipient('your_cc_01@hwink.dev', 'Your Client CC 01'),
       new Recipient('your_cc_02@hwink.dev', 'Your Client CC 02'),
-      new Recipient('your_cc_03@hwink.dev', 'Your Client CC 03'),
+      new Recipient('your_cc_03@hwink.dev', 'Your Client CC 03')
     ]
 
     // BCC (Blind Carbon Copy) - Gửi bản sao ẩn, nghĩa là người nhận chính không biết ai đang nhận được bcc.
@@ -34,7 +34,7 @@ const sendEmail = async ({ to, toName, subject, html }) => {
     const bcc = [
       new Recipient('your_bcc_01@hwink.dev', 'Your Client BCC 01'),
       new Recipient('your_bcc_02@hwink.dev', 'Your Client BCC 02'),
-      new Recipient('your_bcc_03@hwink.dev', 'Your Client BCC 03'),
+      new Recipient('your_bcc_03@hwink.dev', 'Your Client BCC 03')
     ]
 
     // Setup email params theo chuẩn của MailerSend
