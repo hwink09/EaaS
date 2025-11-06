@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import { StatusCodes } from 'http-status-codes'
 import { MOCK_USER } from '~/models/mockDatabase'
+import { MAILER_SEND_TEMPLATE_IDS } from '~/utils/mailerSendTemplates'
 // import { ResendProvider } from '~/providers/ResendProvider'
-import { MailerSendProvider } from '~/providers/MailerSendProvider'
+// import { MailerSendProvider } from '~/providers/MailerSendProvider'
+import { MailerSendWithTemplateDataProvider } from '~/providers/MailerSendWithTemplateDataProvider'
 
 const register = async (req, res) => {
   try {
@@ -37,14 +39,39 @@ const register = async (req, res) => {
     </div>
   </div>
 `
-
+    // =====================================================================================================
+    // =====================================================================================================
     //Gửi mail với Resend
     // const resendEmailResponse = await ResendProvider.sendEmail({ to, subject, html })
     // console.log('🚀 ~ register ~ resendEmailResponse:', resendEmailResponse)
 
+    // =====================================================================================================
+    // =====================================================================================================
     // Gửi mail với MailerSend
-    const mailerSendEmailResponse = await MailerSendProvider.sendEmail({ to, toName, subject, html })
-    console.log('🚀 ~ register ~ mailerSendEmailResponse:', mailerSendEmailResponse)
+    // const mailerSendEmailResponse = await MailerSendProvider.sendEmail({ to, toName, subject, html })
+    // console.log('🚀 ~ register ~ mailerSendEmailResponse:', mailerSendEmailResponse)
+
+    // =====================================================================================================
+    // =====================================================================================================
+    // Gửi mail với MailerSend và Template + Dynamic Data
+    const personalizationData = [
+      {
+        email: to,
+        data: {
+          name: 'hwinkdev',
+          account_name: 'hwinkdev - a person in server earth'
+        }
+      }
+    ]
+    const mailerSendEmailWithTemplateDataResponse = await MailerSendWithTemplateDataProvider.sendEmail({
+      to,
+      toName,
+      subject: 'Created account successfully - {{ name }}',
+      html,
+      templateId: MAILER_SEND_TEMPLATE_IDS.REGISTER_ACCOUNT,
+      personalizationData
+    })
+    console.log('🚀 ~ register ~ mailerSendEmailWithTemplateDataResponse:', mailerSendEmailWithTemplateDataResponse)
 
     // Trả về response với thông tin user đã được tạo
     res.status(StatusCodes.OK).json(createdUser)
