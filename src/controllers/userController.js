@@ -5,7 +5,8 @@ import { MAILER_SEND_TEMPLATE_IDS } from '~/utils/mailerSendTemplates'
 // import { ResendProvider } from '~/providers/ResendProvider'
 // import { MailerSendProvider } from '~/providers/MailerSendProvider'
 // import { MailerSendWithTemplateDataProvider } from '~/providers/MailerSendWithTemplateDataProvider'
-import { MailerSendWithAttachmentsProvider } from '~/providers/MailerSendWithAttachmentsProvider'
+// import { MailerSendWithAttachmentsProvider } from '~/providers/MailerSendWithAttachmentsProvider'
+import { MailerSendWithInlineAttachmentsProvider } from '~/providers/MailerSendWithInlineAttachmentsProvider'
 
 const register = async (req, res) => {
   try {
@@ -15,9 +16,13 @@ const register = async (req, res) => {
     const to = createdUser.EMAIL
     const toName = createdUser.USERNAME
     // const subject = 'Created account successfully - Hwinkdev'
-    const html = ''
-
-
+    const html = `
+    <h1>Hello ${createdUser.USERNAME} </h1>
+    <h2>Your account has been created successfully.</h2>
+    <h3>Regards, hwinkdev</h3>
+    <h4>Email sent by Email as a Service: MailerSend</h4>
+    `
+    // =====================================================================================================
     // =====================================================================================================
     // =====================================================================================================
     //Gửi mail với Resend
@@ -27,11 +32,13 @@ const register = async (req, res) => {
 
     // =====================================================================================================
     // =====================================================================================================
+    // =====================================================================================================
     // Gửi mail với MailerSend
     // const mailerSendEmailResponse = await MailerSendProvider.sendEmail({ to, toName, subject, html })
     // console.log('🚀 ~ register ~ mailerSendEmailResponse:', mailerSendEmailResponse)
 
 
+    // =====================================================================================================
     // =====================================================================================================
     // =====================================================================================================
     // Gửi mail với MailerSend và Template + Dynamic Data
@@ -63,13 +70,53 @@ const register = async (req, res) => {
 
     // =====================================================================================================
     // =====================================================================================================
+    // =====================================================================================================
     // Gửi mail với MailerSend và Template + Dynamic Data + Attachment
+    // const personalizationData = [
+    //   {
+    //     email: to,
+    //     data: {
+    //       name: 'hwinkdev',
+    //       account_name: 'hwinkdev - a person in server earth'
+    //     }
+    //   }
+    // ]
+
+    // const attachments = [
+    //   {
+    //     filePath: 'src/files/hinh-anh-con-cho.jpg',
+    //     fileName: 'file 1 ne',
+    //     attachmentType: 'attachment' // File sẽ được đính kèm ở cuối email
+    //   },
+    //   {
+    //     filePath: 'src/files/con-bo.pdf',
+    //     fileName: 'file 2 day',
+    //     attachmentType: 'attachment' // File sẽ được đính kèm ở cuối email
+    //   }
+    // ]
+
+    // const mailerSendEmailWithAttachmentsResponse = await MailerSendWithAttachmentsProvider.sendEmail({
+    //   to,
+    //   toName,
+    //   subject: 'Created account successfully - {{ name }}',
+    //   html,
+    //   templateId: MAILER_SEND_TEMPLATE_IDS.REGISTER_ACCOUNT,
+    //   personalizationData,
+    //   attachments
+    // })
+    // console.log('🚀 ~ register ~ mailerSendEmailWithAttachmentsResponse:', mailerSendEmailWithAttachmentsResponse)
+
+    // =====================================================================================================
+    // =====================================================================================================
+    // =====================================================================================================
+    // Gửi mail với MailerSend và Template + Dynamic Data + Inline Attachment (đính kèm file ảnh trong nội dung email)
     const personalizationData = [
       {
         email: to,
         data: {
           name: 'hwinkdev',
-          account_name: 'hwinkdev - a person in server earth'
+          account_name: 'hwinkdev - a person in server earth',
+          image: 'https://avatars.githubusercontent.com/u/181130826?v=4'
         }
       }
     ]
@@ -78,7 +125,8 @@ const register = async (req, res) => {
       {
         filePath: 'src/files/hinh-anh-con-cho.jpg',
         fileName: 'file 1 ne',
-        attachmentType: 'attachment' // File sẽ được đính kèm ở cuối email
+        attachmentType: 'inline', // Truyền giá trị "inline" thì file ảnh sẽ được đính kèm trong nội dung email
+        fileId: '0123456789'
       },
       {
         filePath: 'src/files/con-bo.pdf',
@@ -87,16 +135,19 @@ const register = async (req, res) => {
       }
     ]
 
-    const mailerSendEmailWithAttachmentsResponse = await MailerSendWithAttachmentsProvider.sendEmail({
+    const mailerSendEmailWithInlineAttachmentsResponse = await MailerSendWithInlineAttachmentsProvider.sendEmail({
       to,
       toName,
       subject: 'Created account successfully - {{ name }}',
-      html,
+      html: `
+        <h1>Hello ${createdUser.USERNAME} </h1>
+        <img src="cid:0123456789" style="width:450px"/>
+      `,
       templateId: MAILER_SEND_TEMPLATE_IDS.REGISTER_ACCOUNT,
       personalizationData,
       attachments
     })
-    console.log('🚀 ~ register ~ mailerSendEmailWithTemplateDataResponse:', mailerSendEmailWithAttachmentsResponse)
+    console.log('🚀 ~ register ~ mailerSendEmailWithInlineAttachmentsResponse:', mailerSendEmailWithInlineAttachmentsResponse)
 
     // Trả về response với thông tin user đã được tạo
     res.status(StatusCodes.OK).json(createdUser)

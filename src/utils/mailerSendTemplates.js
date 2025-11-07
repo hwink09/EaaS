@@ -1,3 +1,3 @@
 export const MAILER_SEND_TEMPLATE_IDS = {
-  REGISTER_ACCOUNT: '0r83ql3ywj0gzw1j'
+  REGISTER_ACCOUNT: '3vz9dle9en6gkj50'
 }
