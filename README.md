@@ -4,24 +4,24 @@
 > 
 > "A bit of fragrance clings to the hand that gives flowers!"
 
-## 📋 Giới thiệu
+## 📋 Introduction
 
-Email as a Service (EaaS) là một dịch vụ API để gửi email thông qua các nhà cung cấp email phổ biến như **MailerSend** và **Resend**. Dự án được xây dựng với Node.js, Express và hỗ trợ nhiều tính năng gửi email nâng cao.
+Email as a Service (EaaS) is an API service for sending emails through popular email providers such as **MailerSend** and **Resend**. Built with Node.js and Express, the project supports multiple advanced email sending features.
 
-## ✨ Tính năng
+## ✨ Features
 
-- 🚀 **Gửi email cơ bản** với HTML content tùy chỉnh
-- 📧 **Gửi email với template** và dữ liệu động (personalization)
-- 📎 **Gửi email với file đính kèm** (attachments)
-- 🖼️ **Gửi email với inline attachments** (hình ảnh nhúng trong nội dung)
-- 🔄 **Hỗ trợ nhiều email provider**:
+- 🚀 **Send basic emails** with custom HTML content
+- 📧 **Send emails with templates** and dynamic data (personalization)
+- 📎 **Send emails with attachments**
+- 🖼️ **Send emails with inline attachments** (embedded images in content)
+- 🔄 **Support multiple email providers**:
   - MailerSend
   - Resend
-- 🛡️ **CORS** được cấu hình
+- 🛡️ **CORS** configuration
 - 🔐 **Authentication middleware** (JWT)
-- 📱 **RESTful API** với versioning (v1)
+- 📱 **RESTful API** with versioning (v1)
 
-## 🛠️ Công nghệ sử dụng
+## 🛠️ Tech Stack
 
 - **Node.js** (>= 22.x)
 - **Express.js** v5.1.0
@@ -32,27 +32,27 @@ Email as a Service (EaaS) là một dịch vụ API để gửi email thông qua
 - **dotenv** (Environment variables)
 - **ESLint** (Code linting)
 
-## 📦 Cài đặt
+## 📦 Installation
 
-### Yêu cầu
+### Requirements
 
 - Node.js >= 22.x
-- npm hoặc yarn
+- npm or yarn
 
-### Các bước cài đặt
+### Installation Steps
 
-1. Clone repository:
+1. Clone the repository:
 ```bash
 git clone <repository-url>
 cd EaaS
 ```
 
-2. Cài đặt dependencies:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Tạo file `.env` và cấu hình các biến môi trường:
+3. Create a `.env` file and configure environment variables:
 ```env
 # Resend Configuration
 RESEND_API_KEY=your_resend_api_key
@@ -64,7 +64,7 @@ ADMIN_FROM_EMAIL=your_email@domain.com
 ADMIN_SENDER_NAME=Your Name
 ```
 
-4. Chạy ứng dụng:
+4. Run the application:
 
 **Development mode:**
 ```bash
@@ -76,7 +76,7 @@ npm run dev
 npm run production
 ```
 
-## 🚀 Sử dụng
+## 🚀 Usage
 
 ### API Endpoints
 
@@ -105,17 +105,17 @@ Request body:
 }
 ```
 
-## 📁 Cấu trúc thư mục
+## 📁 Project Structure
 
 ```
 EaaS/
 ├── src/
-│   ├── config/              # Cấu hình ứng dụng
+│   ├── config/              # Application configuration
 │   │   ├── corsOptions.js   # CORS configuration
 │   │   └── environment.js   # Environment variables
-│   ├── controllers/         # Controllers xử lý logic
+│   ├── controllers/         # Controllers for business logic
 │   │   └── userController.js
-│   ├── files/              # Thư mục chứa file đính kèm
+│   ├── files/              # Directory for file attachments
 │   ├── middlewares/        # Express middlewares
 │   │   └── authMiddleware.js
 │   ├── models/             # Data models
@@ -136,7 +136,7 @@ EaaS/
 │   └── server.js           # Entry point
 ├── .babelrc                # Babel configuration
 ├── jsconfig.json           # JavaScript configuration
-├── package.json            # Dependencies và scripts
+├── package.json            # Dependencies and scripts
 └── README.md              # Documentation
 ```
 
@@ -144,7 +144,7 @@ EaaS/
 
 ### 1. MailerSend
 
-#### Gửi email cơ bản
+#### Send basic email
 ```javascript
 import { MailerSendProvider } from '~/providers/MailerSendProvider'
 
@@ -156,7 +156,7 @@ await MailerSendProvider.sendEmail({
 })
 ```
 
-#### Gửi email với template
+#### Send email with template
 ```javascript
 import { MailerSendWithTemplateDataProvider } from '~/providers/MailerSendWithTemplateDataProvider'
 
@@ -178,7 +178,7 @@ await MailerSendWithTemplateDataProvider.sendEmail({
 })
 ```
 
-#### Gửi email với attachments
+#### Send email with attachments
 ```javascript
 import { MailerSendWithAttachmentsProvider } from '~/providers/MailerSendWithAttachmentsProvider'
 
@@ -199,7 +199,7 @@ await MailerSendWithAttachmentsProvider.sendEmail({
 })
 ```
 
-#### Gửi email với inline attachments
+#### Send email with inline attachments
 ```javascript
 import { MailerSendWithInlineAttachmentsProvider } from '~/providers/MailerSendWithInlineAttachmentsProvider'
 
@@ -237,23 +237,23 @@ await ResendProvider.sendEmail({
 
 ## 📝 Scripts
 
-| Script | Mô tả |
-|--------|-------|
-| `npm run dev` | Chạy server ở development mode với nodemon |
-| `npm run build` | Build project với Babel |
-| `npm run production` | Build và chạy ở production mode |
-| `npm run lint` | Kiểm tra code với ESLint |
-| `npm run clean` | Xóa thư mục build |
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Run server in development mode with nodemon |
+| `npm run build` | Build project with Babel |
+| `npm run production` | Build and run in production mode |
+| `npm run lint` | Check code with ESLint |
+| `npm run clean` | Remove build directory |
 
 ## 🔧 Configuration
 
 ### CORS
-CORS được cấu hình trong file `src/config/corsOptions.js`
+CORS is configured in the `src/config/corsOptions.js` file
 
 ### Environment Variables
-Các biến môi trường được quản lý trong file `src/config/environment.js`
+Environment variables are managed in the `src/config/environment.js` file
 
-## 👨‍💻 Tác giả
+## 👨‍💻 Author
 
 **Hwink** - [hwink09](https://github.com/hwink09)
 
@@ -261,6 +261,6 @@ Các biến môi trường được quản lý trong file `src/config/environmen
 
 This project is private.
 
-## 🤝 Đóng góp
+## 🤝 Contributing
 
-Mọi đóng góp đều được chào đón! Vui lòng tạo issue hoặc pull request.
+All contributions are welcome! Please create an issue or pull request.
